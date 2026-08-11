@@ -1,0 +1,19 @@
+// Last updated: 8/11/2026, 2:15:47 PM
+class Solution {
+    public boolean checkIfPangram(String sentence) {
+
+        boolean[] seen = new boolean[26];
+
+        for (char ch : sentence.toCharArray()) {
+            seen[ch - 'a'] = true;
+        }
+
+        for (boolean b : seen) {
+            if (!b) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

@@ -1,43 +1,40 @@
-// Last updated: 8/22/2026, 11:06:05 AM
-1import java.util.*;
-2
-3class Solution {
-4    public List<Integer> spiralOrder(int[][] matrix) {
+// Last updated: 8/22/2026, 11:06:53 AM
+1class Solution {
+2    public int[][] generateMatrix(int n) {
+3
+4        int[][] matrix = new int[n][n];
 5
-6        List<Integer> ans = new ArrayList<>();
-7
-8        int top = 0;
-9        int bottom = matrix.length - 1;
-10        int left = 0;
-11        int right = matrix[0].length - 1;
-12
-13        while (top <= bottom && left <= right) {
+6        int top = 0, bottom = n - 1;
+7        int left = 0, right = n - 1;
+8        int value = 1;
+9
+10        while (top <= bottom) {
+11
+12            for (int i = left; i <= right; i++)
+13                matrix[top][i] = value++;
 14
-15            for (int i = left; i <= right; i++)
-16                ans.add(matrix[top][i]);
-17
-18            top++;
+15            top++;
+16
+17            for (int i = top; i <= bottom; i++)
+18                matrix[i][right] = value++;
 19
-20            for (int i = top; i <= bottom; i++)
-21                ans.add(matrix[i][right]);
-22
-23            right--;
-24
-25            if (top <= bottom) {
-26                for (int i = right; i >= left; i--)
-27                    ans.add(matrix[bottom][i]);
+20            right--;
+21
+22            if (top <= bottom) {
+23                for (int i = right; i >= left; i--)
+24                    matrix[bottom][i] = value++;
+25
+26                bottom--;
+27            }
 28
-29                bottom--;
-30            }
-31
-32            if (left <= right) {
-33                for (int i = bottom; i >= top; i--)
-34                    ans.add(matrix[i][left]);
-35
-36                left++;
-37            }
-38        }
-39
-40        return ans;
-41    }
-42}
+29            if (left <= right) {
+30                for (int i = bottom; i >= top; i--)
+31                    matrix[i][left] = value++;
+32
+33                left++;
+34            }
+35        }
+36
+37        return matrix;
+38    }
+39}

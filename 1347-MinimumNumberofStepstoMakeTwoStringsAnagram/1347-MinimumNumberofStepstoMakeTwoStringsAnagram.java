@@ -1,25 +1,32 @@
-// Last updated: 8/22/2026, 11:30:12 AM
-1class Solution {
-2    public int findMin(int[] nums) {
-3
-4        int left = 0;
-5        int right = nums.length - 1;
-6
-7        while (left < right) {
+// Last updated: 8/22/2026, 11:31:15 AM
+1import java.util.*;
+2
+3class Solution {
+4    public int[] maxSlidingWindow(int[] nums, int k) {
+5
+6        int n = nums.length;
+7        int[] ans = new int[n - k + 1];
 8
-9            int mid = left + (right - left) / 2;
+9        Deque<Integer> deque = new ArrayDeque<>();
 10
-11            if (nums[mid] < nums[right]) {
-12                right = mid;
-13            }
-14            else if (nums[mid] > nums[right]) {
-15                left = mid + 1;
+11        for (int i = 0; i < n; i++) {
+12
+13            while (!deque.isEmpty() &&
+14                   deque.peekFirst() <= i - k) {
+15                deque.pollFirst();
 16            }
-17            else {
-18                right--;
-19            }
-20        }
-21
-22        return nums[left];
-23    }
-24}
+17
+18            while (!deque.isEmpty() &&
+19                   nums[deque.peekLast()] <= nums[i]) {
+20                deque.pollLast();
+21            }
+22
+23            deque.addLast(i);
+24
+25            if (i >= k - 1)
+26                ans[i - k + 1] = nums[deque.peekFirst()];
+27        }
+28
+29        return ans;
+30    }
+31}

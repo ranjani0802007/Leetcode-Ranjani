@@ -1,32 +1,29 @@
-// Last updated: 8/22/2026, 11:08:42 AM
-1import java.util.*;
-2
-3class Solution {
-4    public int longestConsecutive(int[] nums) {
+// Last updated: 8/22/2026, 11:09:50 AM
+1class Solution {
+2    public int maxSubarraySumCircular(int[] nums) {
+3
+4        int total = 0;
 5
-6        HashSet<Integer> set = new HashSet<>();
-7
-8        for (int n : nums)
-9            set.add(n);
-10
-11        int ans = 0;
-12
-13        for (int n : set) {
-14
-15            if (!set.contains(n - 1)) {
+6        int maxSum = nums[0];
+7        int currentMax = 0;
+8
+9        int minSum = nums[0];
+10        int currentMin = 0;
+11
+12        for (int n : nums) {
+13
+14            currentMax = Math.max(n, currentMax + n);
+15            maxSum = Math.max(maxSum, currentMax);
 16
-17                int current = n;
-18                int length = 1;
+17            currentMin = Math.min(n, currentMin + n);
+18            minSum = Math.min(minSum, currentMin);
 19
-20                while (set.contains(current + 1)) {
-21                    current++;
-22                    length++;
-23                }
-24
-25                ans = Math.max(ans, length);
-26            }
-27        }
-28
-29        return ans;
-30    }
-31}
+20            total += n;
+21        }
+22
+23        if (maxSum < 0)
+24            return maxSum;
+25
+26        return Math.max(maxSum, total - minSum);
+27    }
+28}

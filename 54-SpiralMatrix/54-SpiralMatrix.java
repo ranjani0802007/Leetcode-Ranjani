@@ -1,29 +1,24 @@
-// Last updated: 8/22/2026, 11:09:50 AM
+// Last updated: 8/22/2026, 11:11:03 AM
 1class Solution {
-2    public int maxSubarraySumCircular(int[] nums) {
+2    public int[] productExceptSelf(int[] nums) {
 3
-4        int total = 0;
-5
-6        int maxSum = nums[0];
-7        int currentMax = 0;
+4        int n = nums.length;
+5        int[] ans = new int[n];
+6
+7        int prefix = 1;
 8
-9        int minSum = nums[0];
-10        int currentMin = 0;
-11
-12        for (int n : nums) {
+9        for (int i = 0; i < n; i++) {
+10            ans[i] = prefix;
+11            prefix *= nums[i];
+12        }
 13
-14            currentMax = Math.max(n, currentMax + n);
-15            maxSum = Math.max(maxSum, currentMax);
-16
-17            currentMin = Math.min(n, currentMin + n);
-18            minSum = Math.min(minSum, currentMin);
-19
-20            total += n;
-21        }
-22
-23        if (maxSum < 0)
-24            return maxSum;
-25
-26        return Math.max(maxSum, total - minSum);
-27    }
-28}
+14        int suffix = 1;
+15
+16        for (int i = n - 1; i >= 0; i--) {
+17            ans[i] *= suffix;
+18            suffix *= nums[i];
+19        }
+20
+21        return ans;
+22    }
+23}

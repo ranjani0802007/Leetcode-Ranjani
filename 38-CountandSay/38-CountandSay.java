@@ -1,19 +1,33 @@
-// Last updated: 8/22/2026, 10:21:48 AM
-1class Solution {
-2    public boolean hasAlternatingBits(int n) {
-3        int prev = n & 1;
-4        n >>= 1;
+// Last updated: 8/22/2026, 10:34:36 AM
+1import java.util.*;
+2
+3class Solution {
+4    public List<List<Integer>> findWinners(int[][] matches) {
 5
-6        while (n > 0) {
-7            int current = n & 1;
-8
-9            if (current == prev)
-10                return false;
+6        HashMap<Integer, Integer> losses = new HashMap<>();
+7
+8        for (int[] match : matches) {
+9            int winner = match[0];
+10            int loser = match[1];
 11
-12            prev = current;
-13            n >>= 1;
+12            losses.putIfAbsent(winner, 0);
+13            losses.put(loser, losses.getOrDefault(loser, 0) + 1);
 14        }
 15
-16        return true;
-17    }
-18}
+16        List<Integer> zero = new ArrayList<>();
+17        List<Integer> one = new ArrayList<>();
+18
+19        for (int player : losses.keySet()) {
+20
+21            if (losses.get(player) == 0)
+22                zero.add(player);
+23            else if (losses.get(player) == 1)
+24                one.add(player);
+25        }
+26
+27        Collections.sort(zero);
+28        Collections.sort(one);
+29
+30        return Arrays.asList(zero, one);
+31    }
+32}

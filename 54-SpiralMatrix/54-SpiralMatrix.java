@@ -1,22 +1,22 @@
-// Last updated: 8/22/2026, 11:11:03 AM
-1class Solution {
-2    public int[] productExceptSelf(int[] nums) {
-3
-4        int n = nums.length;
-5        int[] ans = new int[n];
-6
-7        int prefix = 1;
+// Last updated: 8/22/2026, 11:12:50 AM
+1import java.util.*;
+2
+3class Solution {
+4    public int subarraySum(int[] nums, int k) {
+5
+6        HashMap<Integer, Integer> map = new HashMap<>();
+7        map.put(0, 1);
 8
-9        for (int i = 0; i < n; i++) {
-10            ans[i] = prefix;
-11            prefix *= nums[i];
-12        }
+9        int sum = 0;
+10        int ans = 0;
+11
+12        for (int n : nums) {
 13
-14        int suffix = 1;
+14            sum += n;
 15
-16        for (int i = n - 1; i >= 0; i--) {
-17            ans[i] *= suffix;
-18            suffix *= nums[i];
+16            ans += map.getOrDefault(sum - k, 0);
+17
+18            map.put(sum, map.getOrDefault(sum, 0) + 1);
 19        }
 20
 21        return ans;

@@ -1,26 +1,28 @@
-// Last updated: 8/28/2026, 9:47:24 AM
+// Last updated: 8/28/2026, 9:52:27 AM
 1class Solution {
-2    public boolean searchMatrix(int[][] matrix, int target) {
-3        int rows = matrix.length;
-4        int cols = matrix[0].length;
-5
-6        int low = 0;
-7        int high = rows * cols - 1;
-8
-9        while (low <= high) {
-10            int mid = low + (high - low) / 2;
+2
+3    int maxSum = Integer.MIN_VALUE;
+4
+5    public int maxPathSum(TreeNode root) {
+6        dfs(root);
+7        return maxSum;
+8    }
+9
+10    private int dfs(TreeNode node) {
 11
-12            int value = matrix[mid / cols][mid % cols];
-13
-14            if (value == target) {
-15                return true;
-16            } else if (value < target) {
-17                low = mid + 1;
-18            } else {
-19                high = mid - 1;
-20            }
-21        }
-22
-23        return false;
-24    }
-25}
+12        if (node == null) {
+13            return 0;
+14        }
+15
+16        int left = Math.max(0, dfs(node.left));
+17        int right = Math.max(0, dfs(node.right));
+18
+19        // Path passing through current node
+20        int current = node.val + left + right;
+21
+22        maxSum = Math.max(maxSum, current);
+23
+24        // Return one side to parent
+25        return node.val + Math.max(left, right);
+26    }
+27}

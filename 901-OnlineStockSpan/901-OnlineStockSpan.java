@@ -1,4 +1,4 @@
-// Last updated: 8/28/2026, 9:42:12 AM
+// Last updated: 8/28/2026, 9:42:57 AM
 1class Solution {
 2    public int findMin(int[] nums) {
 3        int low = 0;
